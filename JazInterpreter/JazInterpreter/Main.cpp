@@ -13,7 +13,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	//Run the appropriate mode of operation
+	//Run the appropriate mode of Operation
 	if (argv[1] != nullptr)
 	{
 		string mode = argv[1];
