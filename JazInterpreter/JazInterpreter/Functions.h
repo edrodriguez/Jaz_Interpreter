@@ -1,5 +1,4 @@
-#ifndef __HFUNCTIONS_H__
-#define __HFUNCTIONS_H__
+#pragma once
 
 #include <cstdlib>
 #include <iostream>
@@ -34,5 +33,3 @@ void begin();
 void end();
 int Return();
 int call(string part, int i);
-
-#endif

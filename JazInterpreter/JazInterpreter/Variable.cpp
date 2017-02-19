@@ -2,8 +2,8 @@
 
 Variable::Variable(){
 
-	string name;
-	int value;
+	string name = "";
+	int value = 0;
 
 	this->name =  name;
 	this->value =  value;
