@@ -1,5 +1,6 @@
-#ifndef __HVARIABLE_H__
-#define __HVARIABLE_H__
+//#ifndef __HVARIABLE_H__
+//#define __HVARIABLE_H__
+#pragma once
 
 #include <cstdlib>
 #include <iostream>
@@ -22,4 +23,4 @@ public:
 
 };
 
-#endif
+//#endif
