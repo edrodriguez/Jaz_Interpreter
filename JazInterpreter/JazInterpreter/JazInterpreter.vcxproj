@@ -148,8 +148,10 @@
     <ClCompile Include="SymbolTable.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="FileManipulation.cpp" />
+    <ClCompile Include="ControlManipulation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ControlManipulation.h" />
     <ClInclude Include="FileManipulation.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="SymbolTable.h" />

@@ -2,9 +2,11 @@
 
 #include <cstdlib>
 #include <string>
+#include <vector>
+#include <list>
 using namespace std;
 
 
-void Read_File();
+void ReadFile(string filename, vector<string> instructionList);
 
-void Write_File(string fileName, string content);
+void WriteFile(string fileName, list<string> results);

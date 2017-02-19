@@ -9,10 +9,16 @@
 #include <iostream>
 #include <string>
 
+#include "FileManipulation.h"
+#include "ControlManipulation.h"
+#include "SymbolTable.h"
+
 using namespace std;
 
 int main(int argc, char* argv[])
 {
+	SymbolTable table;
+
 	//Run the appropriate mode of Operation
 	if (argv[1] != nullptr)
 	{
@@ -31,6 +37,7 @@ int main(int argc, char* argv[])
 		{
 			string inputFileName, outputFileName;
 
+			//Parse parameters
 			if (argv[2] == "-infile")
 			{
 				inputFileName = argv[3];
@@ -51,6 +58,11 @@ int main(int argc, char* argv[])
 					cout << "Error running the interpreter. You need to provide a source file." << endl;
 				}
 			}
+
+			ReadFile(inputFileName, table.InstructionList);
+			runProgram();
+			WriteFile(outputFileName, table.OutputQueue);
+
 		}
 	}
 	cout << "Error running the interpreter. You need to provide mode of operation." << endl;
