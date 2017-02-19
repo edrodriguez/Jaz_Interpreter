@@ -6,10 +6,11 @@
 #include <vector>
 #include <stack>
 #include <list>
+#include <unordered_map>
 using namespace std;
 
-
+extern unordered_map<string, int> labels;
 extern	stack <int> JumpStack;
-extern	vector<string> InstructionList;
+extern	vector<vector<string>> InstructionList;
 extern	list  <string> OutputQueue;
 extern	stack <list<int>> MachineStack;

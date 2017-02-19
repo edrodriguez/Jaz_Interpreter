@@ -8,7 +8,7 @@
 using namespace std;
 
 
-void ReadFile(string fileName){
+void ReadFile(string fileName, vector<string> &instructions){
 	ifstream inputFile;
 	string line;
 
@@ -19,7 +19,7 @@ void ReadFile(string fileName){
 		string line;
 		while (!inputFile.eof()) {
 			getline(inputFile, line);
-			InstructionList.push_back(line);
+			instructions.push_back(line);
 		}
 	}
 	else

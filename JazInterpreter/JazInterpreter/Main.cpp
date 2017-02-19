@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "FileManipulation.h"
 #include "ControlManipulation.h"
@@ -57,7 +58,8 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			ReadFile(inputFileName);
+			vector<string> instructions;
+			ReadFile(inputFileName, instructions);
 			runProgram();
 			WriteFile(outputFileName);
 

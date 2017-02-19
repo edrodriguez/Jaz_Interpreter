@@ -7,6 +7,6 @@
 using namespace std;
 
 
-void ReadFile(string fileName);
+void ReadFile(string fileName, vector<string> &instructions);
 
 void WriteFile(string fileName);
