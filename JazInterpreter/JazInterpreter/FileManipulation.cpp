@@ -4,19 +4,42 @@
 #include <vector>
 
 #include "FileManipulation.h"
+#include "SymbolTable.h"
 using namespace std;
 
 
-void ReadFile(string filename, vector<string> instructionList){
-	//ifstream fileIn ();
-	//
-	//fileIn.close();
+void ReadFile(string fileName){
+	ifstream inputFile;
+	string line;
+
+	inputFile.open(fileName);
+
+	if (inputFile.good())
+	{
+		string line;
+		while (!inputFile.eof()) {
+			getline(inputFile, line);
+			InstructionList.push_back(line);
+		}
+	}
+	else
+		cout << "Could not read input file." << endl;
+
+	inputFile.close();
 }
 
-void WriteFile(string fileName, list<string> results) {
-	//ofstream fileOut ((char *) fileName.c_str(), ofstream::out);
+void WriteFile(string fileName) {
+	ofstream outputFile;
+	OutputQueue;
 
-	//fileOut << content;
+	outputFile.open(fileName);
+	if (outputFile.good())
+	{
+		outputFile << OutputQueue.front();
+		OutputQueue.pop_front();
+	}
+	else
+		cout << "Could not write to output file." << endl;
 
-	//fileOut.close();
+	outputFile.close();
 }

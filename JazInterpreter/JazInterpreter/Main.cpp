@@ -17,8 +17,6 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	SymbolTable table;
-
 	//Run the appropriate mode of Operation
 	if (argv[1] != nullptr)
 	{
@@ -59,9 +57,9 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			ReadFile(inputFileName, table.InstructionList);
+			ReadFile(inputFileName);
 			runProgram();
-			WriteFile(outputFileName, table.OutputQueue);
+			WriteFile(outputFileName);
 
 		}
 	}

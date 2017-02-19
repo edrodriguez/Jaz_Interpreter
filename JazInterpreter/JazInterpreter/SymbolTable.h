@@ -9,10 +9,7 @@
 using namespace std;
 
 
-class SymbolTable {
-public:
-	stack < int    > JumpStack;
-	vector< string > InstructionList;
-	list  < string > OutputQueue;
-	stack < list < int > > MachineStack;
-};
+extern	stack <int> JumpStack;
+extern	vector<string> InstructionList;
+extern	list  <string> OutputQueue;
+extern	stack <list<int>> MachineStack;
