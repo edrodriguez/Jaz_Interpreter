@@ -145,11 +145,10 @@
 	<ClCompile Include="Main.cpp" />
 	<ClCompile Include="Functions.cpp" />
 	<ClCompile Include="Variable.cpp" />
-	<ClCompile Include="File_Manipulation.cpp" />
+	<ClCompile Include="FileManipulation.cpp" />
   </ItemGroup>
     <ItemGroup>
 	<ClCompile Include="Variable.h" />
-	<ClCompile Include="JazInterpreter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
