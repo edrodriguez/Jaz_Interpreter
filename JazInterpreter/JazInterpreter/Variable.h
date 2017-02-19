@@ -1,5 +1,3 @@
-//#ifndef __HVARIABLE_H__
-//#define __HVARIABLE_H__
 #pragma once
 
 #include <cstdlib>
@@ -22,5 +20,3 @@ public:
 	void setValue(int value);
 
 };
-
-//#endif
