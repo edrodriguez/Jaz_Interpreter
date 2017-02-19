@@ -142,14 +142,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-	<ClCompile Include="Main.cpp" />
-	<ClCompile Include="Functions.cpp" />
-	<ClCompile Include="Variable.cpp" />
-	<ClCompile Include="FileManipulation.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Functions.cpp" />
+    <ClCompile Include="Variable.cpp" />
+    <ClCompile Include="FileManipulation.cpp" />
   </ItemGroup>
-    <ItemGroup>
-	<ClCompile Include="Variable.h" />
-	<ClCompile Include="Functions.h" />
+  <ItemGroup>
+    <ClCompile Include="Variable.h" />
+    <ClCompile Include="Functions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FileManipulation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

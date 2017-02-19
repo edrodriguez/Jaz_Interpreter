@@ -5,39 +5,34 @@
 #include <iostream>
 using namespace std;
 
-class Functions{
-protected:
-	string part;
-public:
-	void rvalue(String part);
-	void lvalue(String part);
-	void colEquals();
-	void copy();
-	void label(String part, int i);
-	int goTo(String part, int i);
-	int goFalse(String part, int i);
-	int goTrue(String part, int i);
-	void plus();
-	void minus();
-	void multi();
-	void div();
-	void mod();
-	void and();
-	void not();
-	void or();
-	void different();
-	void lessThanEq();
-	void greaterThanEq();
-	void lessThan();
-	void greaterThan();
-	void equalTo();
-	void print();
-	void show(String[] parts);
-	void begin();
-	void end();
-	int Return();
-	int call(String part, int i)
 
-};
+void rvalue(string part);
+void lvalue(string part);
+void colEquals();
+void copy();
+void label(string part, int i);
+int goTo(string part, int i);
+int goFalse(string part, int i);
+int goTrue(string part, int i);
+void plus();
+void minus();
+void multi();
+void div();
+void mod();
+void and();
+void not();
+void or();
+void different();
+void lessThanEq();
+void greaterThanEq();
+void lessThan();
+void greaterThan();
+void equalTo();
+void print();
+void show(string parts);
+void begin();
+void end();
+int Return();
+int call(string part, int i);
 
 #endif

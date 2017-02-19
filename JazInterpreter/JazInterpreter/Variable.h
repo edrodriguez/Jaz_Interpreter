@@ -8,16 +8,17 @@ using namespace std;
 
 class Variable{
 protected:
-	string value, name;
+	string name;
+	int value;
 public:
-	Variable{();
-	Variable{(string name, int value);
+	Variable();
+	Variable(string name, int value);
 
 	string getName() { return name; };
 	int getValue() { return value; };
 
 	void setName(string name);
-	void setValue(string value);
+	void setValue(int value);
 
 };
 
