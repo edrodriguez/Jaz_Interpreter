@@ -1,5 +1,4 @@
 #include "Functions.h"
-
 /**
  * Pushes the value of passed variable on the Jaz Stack.
  * Takes the read list on the stack and pushes that value
@@ -40,7 +39,7 @@ void copy() {
 	 * Something should go here
 	 */
 }
-void label(string part, int i) {
+void label(string part) {
 	/**
 	 * Something should go here
 	 */
@@ -48,7 +47,7 @@ void label(string part, int i) {
 /**
  * Jumps to the location in the label.
  */
-int goTo(string part, int i) {
+int goTo(string part) {
 	/**
 	 * Something should go here
 	 */
@@ -58,7 +57,7 @@ int goTo(string part, int i) {
  * Jumps if the top value in the Write top's last location 
  * is zero.
  */
-int goFalse(string part, int i) {
+int goFalse(string part) {
 	/**
 	 * Something should go here
 	 */
@@ -68,7 +67,7 @@ int goFalse(string part, int i) {
 /**
  * Jumps if the top value in the write top's last location is one.
  */
-int goTrue(string part, int i) {
+int goTrue(string part) {
 	/**
 	 * Something should go here
 	 */
@@ -79,50 +78,60 @@ int goTrue(string part, int i) {
  * Takes the last two variables from the write top. Adds them together
  * and puts the result in the write top list.
  */
-void plus() {
-	/**
-	 * Something should go here
-	 */
+void plusOp() {
+	Variable firstV;
+	Variable secondV;
+	int plusResult = 0;
+
+	plusResult = firstV.getValue + secondV.getValue;
 }
 /**
  * Subtracts top two values on Jaz stack and places result on Jaz stack.
  * Takes the last two variables from the write top. Subtracts them together
  * and puts the result in the write top list.
  */
-void minus() {
-	/**
-	 * Something should go here
-	 */
+void minusOp() {
+	Variable firstV;
+	Variable secondV;
+	int minusResult = 0;
+
+	minusResult = secondV.getValue - firstV.getValue;
 }
 /**
  * Multiplies top two values on Jaz stack and places result on Jaz stack.
  * Takes the last two variables from the write top. Multiplies them together
  * and puts the result in the write top list.
  */
-void multi() {
-	/**
-	 * Something should go here
-	 */
+void multiOp() {
+	Variable firstV;
+	Variable secondV;
+	int multResult = 0;
+
+	multResult = firstV.getValue * secondV.getValue;
 }
 /**
  * Divides the top two values on Jaz stack and places result on Jaz stack.
  * Takes the last two variables from the write top. Divides them together
  * and puts the result in the write top list.
  */
-void div() {
-	/**
-	 * Something should go here
-	 */
+void divOp() {
+	Variable firstV;
+	Variable secondV;
+	int dicResult = 0;
+
+	dicResult =  secondV.getValue / firstV.getValue;
 }
 /**
  * Mods the top two values on Jaz stack and places result on Jaz stack.
  * Takes the last two variables from the write top. Mods them together
  * and puts the result in the write top list.
  */
-void mod() {
-	/**
-	 * Something should go here
-	 */
+void modOp() {
+	Variable firstV;
+	Variable secondV;
+	int modResult = 0;
+
+	modResult = secondV.getValue % firstV.getValue;
 }
 /**
  * Logical AND the top two values on Jaz stack and places result on Jaz stack.
@@ -214,10 +223,11 @@ void print() {
 /**
  * Prints the passed string.
  */
-void show(string parts) {
+void show(string operand) {
 	/**
-     * Something should go here
+     * Print operand
 	 */
+	cout << operand;
 }
 /**
  * Starts the parameter passing block.
@@ -243,7 +253,7 @@ void end() {
  */
 int Return() {
 	/**
-	 * Something should go here
+	 * Exiting...
 	 */
 	return 0;
 
@@ -254,7 +264,7 @@ int Return() {
  * pointer value onto the jump stack. If begin is set increments
  * the Read top pointer.
  */
-int call(string part, int i) {
+int call(string part) {
 	/**
 	 * Something should go here
 	 **/

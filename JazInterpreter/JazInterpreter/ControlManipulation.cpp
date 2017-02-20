@@ -34,112 +34,111 @@ void runProgram()
 
 void executeInstruction(vector<string> instruction)
 {
-    string content;
-    int index;
     /**
 	 * Here we grab the operator
 	 */
-	string part = instruction[0];
-	/**
-	 * Here we grab the operand
-	 */
-	for(size_t i = 1; i < instruction.size(); i++){
-        for(int j = 0; j < instruction[i].length(); j = 0){
-            content[ i ] = instruction[ i + j ];
-        }
-
-	}
+	string intsrOperator = instruction[0];
 	/**
 	 * This will execute the instruction accordingly
 	 */
-	if (part == "rvalue") {
-//		rvalue();
+	if (intsrOperator == "rvalue") {
+		rvalue(instruction[1]);
 	}
-	else if (part == "lvalue") {
-//		lvalue();
+	else if (intsrOperator == "lvalue") {
+		lvalue(instruction[1]);
 	}
-	else if (part == ":=") {
-//		colEquals();
+	else if (intsrOperator == ":=") {
+		colEquals();
 	}
-	else if (part == "copy") {
-//		copy();
+	else if (intsrOperator == "copy") {
+		copy();
 	}
-	else if (part == "label") {
-//		label();
+	else if (intsrOperator == "label") {
+		label(instruction[1]);
 	}
-	else if (part == "goto") {
-//		index = goTo();
+	else if (intsrOperator == "goto") {
+		goTo(instruction[1]);
 	}
-	else if (part == "gofalse") {
-//		index = goFalse();
+	else if (intsrOperator == "gofalse") {
+		goFalse(instruction[1]);
 	}
-	else if (part == "gotrue") {
-//		index = goTrue(part[1], i);
+	else if (intsrOperator == "gotrue") {
+		goTrue(instruction[1]);
 	}
-	else if (part == "halt") {
-		return;
+	else if (intsrOperator == "halt") {
+		Return();
 	}
-	else if (part == "+") {
-//		plus();
+	else if (intsrOperator == "+") {
+		plusOp();
 	}
-	else if (part == "-")) {
-//		minus();
+	else if (intsrOperator == "-") {
+		minusOp();
 	}
-	else if (part == "*") {
-//		multi();
+	else if (intsrOperator == "*") {
+		multiOp();
 	}
-	else if (part == "/") {
-//		div();
+	else if (intsrOperator == "/") {
+		divOp();
 	}
-	else if (part == "div") {
-//		mod();
+	else if (intsrOperator == "div") {
+		modOp();
 	}
-	else if (part == "&") {
-//		and();
+	else if (intsrOperator == "&") {
+		and();
 	}
-	else if (part == "!") {
-//		not();
+	else if (intsrOperator == "!") {
+		not();
 	}
-	else if (part == "|") {
-//		or();
+	else if (intsrOperator == "|") {
+		or();
 	}
-	else if (part == "<>") {
-//		different();
+	else if (intsrOperator == "<>") {
+		different();
 	}
-	else if (part == "<=") {
-//		lessThanEq();
+	else if (intsrOperator == "<=") {
+		lessThanEq();
 	}
-	else if (part == ">=") {
-//		greaterThanEq();
+	else if (intsrOperator == ">=") {
+		greaterThanEq();
 	}
-	else if (part == "<") {
-//		lessThan();
+	else if (intsrOperator == "<") {
+		lessThan();
 	}
-	else if (part == ">") {
-//		greaterThan();
+	else if (intsrOperator == ">") {
+		greaterThan();
 	}
-	else if (part == "=") {
-//		equalTo();
+	else if (intsrOperator == "=") {
+		equalTo();
 	}
-	else if (part == "print") {
-//		print();
+	else if (intsrOperator == "print") {
+		print();
 	}
-	else if (part == "show") {
-//		show(part);
+	else if (intsrOperator == "show") {
+		/**
+		* Here we grab the operand
+		*/
+		string content;
+		for (size_t i = 1; i < instruction.size(); i++) {
+			for (int j = 0; j < instruction[i].length(); j = 0) {
+				content[i] = instruction[i][j];
+			}
+
+		}
+		show(content);
 	}
-	else if (part == "begin") {
-//		begin();
+	else if (intsrOperator == "begin") {
+		begin();
 	}
-	else if (part == "end") {
-//		end();
+	else if (intsrOperator == "end") {
+		end();
 	}
-	else if (part == "return") {
-//		index = Return();
+	else if (intsrOperator == "return") {
+		Return();
 	}
-	else if (part == "call") {
-//		index = call(part[1], i);
+	else if (intsrOperator == "call") {
+		call(instruction[1]);
 	}
-	else if (part == "==") {
+	else if (intsrOperator == "==") {
 		/**
 		 * Do nothing..
          *  This allows white space
@@ -147,8 +146,7 @@ void executeInstruction(vector<string> instruction)
          */
 	}
 	else {
-		cout << "Syntax Error: " << part;
+		cout << "Syntax Error: " << intsrOperator;
 		return;
 	}
-	return;
 }
