@@ -23,9 +23,6 @@ int main(int argc, char* argv[])
 	{
 		string mode = argv[1];
 
-		for (size_t i = 0; i < mode.size(); i++)
-			mode[i] = tolower(mode[i]);
-
 		if (mode == "-test")
 		{
 			cout << "Running Tests for Intepreter" << endl;
@@ -35,11 +32,16 @@ int main(int argc, char* argv[])
 		else if (mode == "-interpret")
 		{
 			string inputFileName, outputFileName;
+			string file;
+
+			if (argv[2] != nullptr)
+				file = argv[2];
 
 			//Parse parameters
-			if (argv[2] == "-infile")
+			if (file == "-infile")
 			{
-				inputFileName = argv[3];
+				if (argv[3] != nullptr)
+					inputFileName = argv[3];
 
 				if (argv[4] != nullptr && argv[4] == "-outfile")
 					outputFileName = argv[5];
@@ -48,7 +50,8 @@ int main(int argc, char* argv[])
 			}
 			else if (argv[2] == "-outfile")
 			{
-				outputFileName = argv[3];
+				if (argv[3] != nullptr)
+					outputFileName = argv[3];
 
 				if (argv[4] != nullptr && argv[4] == "-infile")
 					outputFileName = argv[5];
@@ -57,9 +60,17 @@ int main(int argc, char* argv[])
 					cout << "Error running the interpreter. You need to provide a source file." << endl;
 				}
 			}
+			else
+			{
+				cout << "Error running the interpreter. You need to provide a source file." << endl;
+				return 0;
+			}
 
+			//Intepreter Operation
 			vector<string> instructions;
 			ReadFile(inputFileName, instructions);
+			separateInstructions(instructions);
+			extractLabels();
 			runProgram();
 			WriteFile(outputFileName);
 
@@ -67,5 +78,5 @@ int main(int argc, char* argv[])
 	}
 	cout << "Error running the interpreter. You need to provide mode of operation." << endl;
 
-
+	return 0;
 }

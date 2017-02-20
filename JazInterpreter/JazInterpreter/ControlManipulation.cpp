@@ -7,6 +7,8 @@
 using namespace std;
 
 void separateInstructions(vector<string> instructions) {
+	InstructionList.resize(instructions.size());
+
 	for (size_t i = 0; i < instructions.size(); i++) {
 		istringstream iss(instructions[i]);
 		copy(istream_iterator<string>(iss),

@@ -19,7 +19,8 @@ void ReadFile(string fileName, vector<string> &instructions){
 		string line;
 		while (!inputFile.eof()) {
 			getline(inputFile, line);
-			instructions.push_back(line);
+			if (line != "")
+				instructions.push_back(line);
 		}
 	}
 	else
