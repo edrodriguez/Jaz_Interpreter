@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 void separateInstructions(vector<string> instructions) {
 	InstructionList.resize(instructions.size());
 
@@ -26,8 +27,12 @@ void extractLabels() {
 
 void runProgram()
 {
+	for (programCounter; programCounter < InstructionList.size(); programCounter++)
+	{
+		executeInstruction(InstructionList[programCounter]);
+	}
 }
 
-void executeInstruction()
+void executeInstruction(vector<string> instruction)
 {
 }
