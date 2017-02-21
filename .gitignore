@@ -283,3 +283,5 @@ JazInterpreter/\.vs/JazInterpreter/v14/\.suo
 *.db
 
 *.opendb
+
+*.jaz

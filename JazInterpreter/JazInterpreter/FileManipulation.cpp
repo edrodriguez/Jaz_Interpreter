@@ -36,8 +36,10 @@ void WriteFile(string fileName) {
 	outputFile.open(fileName);
 	if (outputFile.good())
 	{
-		outputFile << OutputQueue.front();
-		OutputQueue.pop_front();
+		while(!OutputQueue.empty()) {
+			outputFile << OutputQueue.front();
+			OutputQueue.pop_front();
+		}
 	}
 	else
 		cout << "Could not write to output file." << endl;
