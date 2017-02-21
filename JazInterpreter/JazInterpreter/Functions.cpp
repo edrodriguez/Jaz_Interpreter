@@ -76,6 +76,7 @@ void colEquals() {
 		}
 	}
 }
+
 /**
  * Pushes a copy of the top value on Jaz stack.
  * 
@@ -83,10 +84,10 @@ void colEquals() {
  * into the write top.
  */
 void copy() {
-	/**
-	 * Something should go here
-	 */
+	int value = MachineStack.top().back();
+	MachineStack.top().push_back(value);
 }
+
 void label(string part) {
 	/**
 	 * Something should go here
