@@ -30,13 +30,16 @@ void modOp();
 
 void show(string);
 
+void and();
+
+void not();
+
+void or ();
+
 void label( string );
 int goTo( string );
 int goFalse( string );
 int goTrue( string );
-void and();
-void not();
-void or();
 void different();
 void lessThanEq();
 void greaterThanEq();
