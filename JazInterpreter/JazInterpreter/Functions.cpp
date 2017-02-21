@@ -1,32 +1,80 @@
 #include "Functions.h"
+#include "SymbolTable.h"
+#include "Variable.h"
+#include <string>
+
+/*
+* 
+* pushes value to stack
+* 
+*/
+void push(string value) {
+	MachineStack.top().push_back(stoi(value));
+}
+
 /**
  * Pushes the value of passed variable on the Jaz Stack.
  * Takes the read list on the stack and pushes that value
  * onto the write list on the stack.
  */
-void rvalue(string part) {
-	/**
-	 * Something should go here
-	 */
+void rvalue(string variable) {
+	int value;
+
+	for (size_t i = 0; i < Variables.top().size(); i++) {
+		if (variable == Variables.top()[i].getName()) {
+			value = Variables.top()[i].getValue();
+			break;
+		}
+	}
+
+	//Need to add check for making sure variable was found!!!!!!!!!!
+	MachineStack.top().push_back(value);
 }
+
 /**
  * Pushes the location passed onto the Jaz stack.
  * Takes the name passed on the write list on the stack.
  */
-void lvalue(string part) {
-	/**
-	 * Something should go here
-	 */
+void lvalue(string variable) {
+
+	//find if variable has already been declared
+	bool found = false;
+	Variable v;
+	for (size_t i = 0; i < Variables.top().size(); i++) {
+		if (variable == Variables.top()[i].getName()) {
+			found = true;
+			v = Variables.top()[i];
+			break;
+		}
+	}
+	//if not found create variable
+	if (!found) {
+		v.setName(variable);
+		v.setValue(0);
+	}
+	
+	Variables.top().push_back(v);
+	MachineStack.top().push_back(int(&(Variables.top().back())));
 }
+
 /**
  * Takes the number and places it into the location below it.
  * Removes the last 2 variables in the write top and puts them together.
  * 
  */
 void colEquals() {
-	/**
-	 * Something should go here
-	 */
+	//Add check if variable not found!!!!!!!!!!!
+	int vValue = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int vAdress = MachineStack.top().back();
+	MachineStack.top().pop_back();
+
+	for (size_t i = 0; i < Variables.top().size(); i++) {
+		if (vAdress == int(&(Variables.top()[i]))) {
+			Variables.top()[i].setValue(vValue);
+			break;
+		}
+	}
 }
 /**
  * Pushes a copy of the top value on Jaz stack.
@@ -83,7 +131,7 @@ void plusOp() {
 	Variable secondV;
 	int plusResult = 0;
 
-	plusResult = firstV.getValue + secondV.getValue;
+	plusResult = firstV.getValue() + secondV.getValue();
 }
 /**
  * Subtracts top two values on Jaz stack and places result on Jaz stack.
@@ -95,7 +143,7 @@ void minusOp() {
 	Variable secondV;
 	int minusResult = 0;
 
-	minusResult = secondV.getValue - firstV.getValue;
+	minusResult = secondV.getValue() - firstV.getValue();
 }
 /**
  * Multiplies top two values on Jaz stack and places result on Jaz stack.
@@ -107,7 +155,7 @@ void multiOp() {
 	Variable secondV;
 	int multResult = 0;
 
-	multResult = firstV.getValue * secondV.getValue;
+	multResult = firstV.getValue() * secondV.getValue();
 }
 /**
  * Divides the top two values on Jaz stack and places result on Jaz stack.
@@ -119,7 +167,7 @@ void divOp() {
 	Variable secondV;
 	int dicResult = 0;
 
-	dicResult =  secondV.getValue / firstV.getValue;
+	dicResult =  secondV.getValue() / firstV.getValue();
 }
 /**
  * Mods the top two values on Jaz stack and places result on Jaz stack.
@@ -131,7 +179,7 @@ void modOp() {
 	Variable secondV;
 	int modResult = 0;
 
-	modResult = secondV.getValue % firstV.getValue;
+	modResult = secondV.getValue() % firstV.getValue();
 }
 /**
  * Logical AND the top two values on Jaz stack and places result on Jaz stack.

@@ -5,10 +5,14 @@
 #include "Variable.h"
 using namespace std;
 
+void push(string value);
 
-void rvalue( string );
-void lvalue( string );
+void rvalue(string variable);
+
+void lvalue(string variable);
+
 void colEquals();
+
 void copy();
 void label( string );
 int goTo( string );

@@ -41,6 +41,9 @@ void executeInstruction(vector<string> instruction)
 	/**
 	 * This will execute the instruction accordingly
 	 */
+	if (intsrOperator == "push") {
+		push(instruction[1]);
+	}
 	if (intsrOperator == "rvalue") {
 		rvalue(instruction[1]);
 	}
@@ -119,7 +122,7 @@ void executeInstruction(vector<string> instruction)
 		*/
 		string content;
 		for (size_t i = 1; i < instruction.size(); i++) {
-			for (int j = 0; j < instruction[i].length(); j = 0) {
+			for (size_t j = 0; j < instruction[i].length(); j = 0) {
 				content[i] = instruction[i][j];
 			}
 

@@ -5,3 +5,4 @@ stack <int> JumpStack;
 vector<vector<string>> InstructionList;
 list  <string> OutputQueue;
 stack <list<int>> MachineStack;
+stack<vector<Variable>> Variables;

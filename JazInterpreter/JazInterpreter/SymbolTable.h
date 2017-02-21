@@ -10,7 +10,8 @@
 using namespace std;
 
 extern unordered_map<string, int> labels;
-extern	stack <int> JumpStack;
-extern	vector<vector<string>> InstructionList;
-extern	list  <string> OutputQueue;
-extern	stack <list<int>> MachineStack;
+extern stack <int> JumpStack;
+extern vector<vector<string>> InstructionList;
+extern list  <string> OutputQueue;
+extern stack <list<int>> MachineStack;
+extern stack<vector<Variable>> Variables;
