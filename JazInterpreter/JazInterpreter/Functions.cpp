@@ -1,17 +1,16 @@
 #include "Functions.h"
-#include "SymbolTable.h"
-#include "Variable.h"
-#include <string>
-
-/*
-* 
-* pushes value to stack
-* 
+/**
+*  Pushes value to stack
 */
 void push(string value) {
 	MachineStack.top().push_back(stoi(value));
 }
-
+/**
+*  Pops value from stack
+*/
+void pop(string value) {
+	MachineStack.top().pop_back(stoi(value));
+}
 /**
  * Pushes the value of passed variable on the Jaz Stack.
  * Takes the read list on the stack and pushes that value
@@ -30,7 +29,6 @@ void rvalue(string variable) {
 	//Need to add check for making sure variable was found!!!!!!!!!!
 	MachineStack.top().push_back(value);
 }
-
 /**
  * Pushes the location passed onto the Jaz stack.
  * Takes the name passed on the write list on the stack.
@@ -52,15 +50,14 @@ void lvalue(string variable) {
 		v.setName(variable);
 		v.setValue(0);
 	}
-	
+
 	Variables.top().push_back(v);
 	MachineStack.top().push_back(int(&(Variables.top().back())));
 }
-
 /**
  * Takes the number and places it into the location below it.
  * Removes the last 2 variables in the write top and puts them together.
- * 
+ *
  */
 void colEquals() {
 	//Add check if variable not found!!!!!!!!!!!
@@ -76,10 +73,9 @@ void colEquals() {
 		}
 	}
 }
-
 /**
  * Pushes a copy of the top value on Jaz stack.
- * 
+ *
  * Pushes a copy from the Write top's last variable
  * into the write top.
  */
@@ -103,7 +99,7 @@ int goTo(string part) {
 	return 0;
 }
 /**
- * Jumps if the top value in the Write top's last location 
+ * Jumps if the top value in the Write top's last location
  * is zero.
  */
 int goFalse(string part) {
@@ -128,11 +124,14 @@ int goTrue(string part) {
  * and puts the result in the write top list.
  */
 void plusOp() {
-	Variable firstV;
-	Variable secondV;
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
 	int plusResult = 0;
 
-	plusResult = firstV.getValue() + secondV.getValue();
+	plusResult = firstV + secondV;
+	MachineStack.top().push_back(plusResult);
 }
 /**
  * Subtracts top two values on Jaz stack and places result on Jaz stack.
@@ -140,11 +139,14 @@ void plusOp() {
  * and puts the result in the write top list.
  */
 void minusOp() {
-	Variable firstV;
-	Variable secondV;
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
 	int minusResult = 0;
 
-	minusResult = secondV.getValue() - firstV.getValue();
+	minusResult = secondV - firstV;
+	MachineStack.top().push_back(minusResult);
 }
 /**
  * Multiplies top two values on Jaz stack and places result on Jaz stack.
@@ -152,11 +154,14 @@ void minusOp() {
  * and puts the result in the write top list.
  */
 void multiOp() {
-	Variable firstV;
-	Variable secondV;
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
 	int multResult = 0;
 
-	multResult = firstV.getValue() * secondV.getValue();
+	multResult = firstV * secondV;
+	MachineStack.top().push_back(multResult);
 }
 /**
  * Divides the top two values on Jaz stack and places result on Jaz stack.
@@ -164,11 +169,14 @@ void multiOp() {
  * and puts the result in the write top list.
  */
 void divOp() {
-	Variable firstV;
-	Variable secondV;
-	int dicResult = 0;
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int divResult = 0;
 
-	dicResult =  secondV.getValue() / firstV.getValue();
+	divResult =  secondV / firstV;
+	MachineStack.top().push_back(divResult);
 }
 /**
  * Mods the top two values on Jaz stack and places result on Jaz stack.
@@ -176,11 +184,14 @@ void divOp() {
  * and puts the result in the write top list.
  */
 void modOp() {
-	Variable firstV;
-	Variable secondV;
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
 	int modResult = 0;
 
-	modResult = secondV.getValue() % firstV.getValue();
+	modResult = secondV % firstV;
+	MachineStack.top().push_back(modResult);
 }
 /**
  * Logical AND the top two values on Jaz stack and places result on Jaz stack.
@@ -188,9 +199,14 @@ void modOp() {
  * and places the result into the write top list.
  */
 void and() {
-	/**
-	 * Something should go here
-	 */
+/*	Variable firstV = Variable.top().back();
+	Variable secondV = Variable.top().back();
+
+    if ((FstValue.getValue() == 1) && (SndValue.getValue() == 1)) {
+        Variable.top().push_back(Variable("", 1));
+    } else {
+        Variable.top().push_back(Variable("", 0));
+    }*/
 }
 /**
  * Logical NOT the top value on Jaz stack and places result on Jaz stack.
@@ -198,9 +214,7 @@ void and() {
  * and places the result into the write top list.
  */
 void not() {
-	/**
-	 * Something should go here		 
-	 */
+
 }
 /**
  * Logical OR the top two values on Jaz stack and places result on Jaz stack.
@@ -254,7 +268,7 @@ void greaterThan() {
 	 */
 }
 /**
- * Checks if the write top minus one is equal to the write top. 
+ * Checks if the write top minus one is equal to the write top.
  */
 void equalTo() {
 	/**
@@ -262,7 +276,7 @@ void equalTo() {
 	 */
 }
 /**
- * Prints the value from the write top's last entry. 
+ * Prints the value from the write top's last entry.
  */
 void print() {
 	/**

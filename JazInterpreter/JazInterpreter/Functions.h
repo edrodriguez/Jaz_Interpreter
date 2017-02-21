@@ -1,8 +1,9 @@
 #pragma once
 #include <cstdlib>
 #include <iostream>
-#include <string>
+#include "SymbolTable.h"
 #include "Variable.h"
+#include <string>
 using namespace std;
 
 void push(string value);

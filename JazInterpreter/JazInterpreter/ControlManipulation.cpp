@@ -44,7 +44,10 @@ void executeInstruction(vector<string> instruction)
 	if (intsrOperator == "push") {
 		push(instruction[1]);
 	}
-	if (intsrOperator == "rvalue") {
+    else if (intsrOperator == "pop") {
+		push(instruction[1]);
+	}
+	else if (intsrOperator == "rvalue") {
 		rvalue(instruction[1]);
 	}
 	else if (intsrOperator == "lvalue") {
