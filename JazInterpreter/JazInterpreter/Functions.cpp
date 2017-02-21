@@ -214,7 +214,6 @@ void and() {
  * and places the result into the write top list.
  */
 void not() {
-	int size = MachineStack.top().size();
 	int stackTop = MachineStack.top().back();
 	MachineStack.top().pop_back();
 
@@ -249,57 +248,104 @@ void or() {
  * If so place a 1 otherwise places a 0 onto the stack.
  */
 void different() {
-	/**
-	 * Something should go here
-	 */
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+
+	if (firstV != secondV) {
+		MachineStack.top().push_back(1);
+	}
+	else {
+		MachineStack.top().push_back(0);
+	}
 }
 /**
  * Checks if the write top minus one is less or equal write top
  */
 void lessThanEq() {
-	/**
-	 * Something should go here
-	 */
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+
+	if (firstV <= secondV) {
+		MachineStack.top().push_back(1);
+	}
+	else {
+		MachineStack.top().push_back(0);
+	}
 }
 /**
  * Checks if the write top minus one is greater or equals to the write top
  */
 void greaterThanEq() {
-	/**
-	 * Something should go here
-	 */
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+
+	if (firstV >= secondV) {
+		MachineStack.top().push_back(1);
+	}
+	else {
+		MachineStack.top().push_back(0);
+	}
 }
 /**
  * Checks if the write top minus one is less than the write top;
  */
 void lessThan() {
-	/**
-	 * Something should go here
-	 */
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+
+	if (firstV < secondV) {
+		MachineStack.top().push_back(1);
+	}
+	else {
+		MachineStack.top().push_back(0);
+	}
 }
 /**
  * Check if the write top minus one is greater than the write top.
  */
 void greaterThan() {
-	/**
-	 * Something should go here
-	 */
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+
+	if (firstV > secondV) {
+		MachineStack.top().push_back(1);
+	}
+	else {
+		MachineStack.top().push_back(0);
+	}
 }
 /**
  * Checks if the write top minus one is equal to the write top.
  */
 void equalTo() {
-	/**
-	 * Something should go here
-	 */
+	int firstV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	int secondV = MachineStack.top().back();
+	MachineStack.top().pop_back();
+
+	if (firstV == secondV) {
+		MachineStack.top().push_back(1);
+	}
+	else {
+		MachineStack.top().push_back(0);
+	}
 }
 /**
  * Prints the value from the write top's last entry.
  */
 void print() {
-	/**
-	 * Something should go here
-	 */
+	int temp = MachineStack.top().back();
+	cout << temp << endl;
 }
 /**
  * Prints the passed string.
@@ -312,12 +358,11 @@ void show(string operand) {
 }
 /**
  * Starts the parameter passing block.
- * Increases the write top and sets begin to true.
+ * Increases the stack table to start
+ * the subprogram.
  */
 void begin() {
-	/**
-	 * Something should go here
-	 */
+	//MachineStack.top.push_back(new list<int>);
 }
 /**
  * Ends parameter passing block.
