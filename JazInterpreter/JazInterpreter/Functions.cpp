@@ -214,7 +214,19 @@ void and() {
  * and places the result into the write top list.
  */
 void not() {
+	int size = MachineStack.top().size();
+	int stackTop = MachineStack.top().back();
+	MachineStack.top().pop_back();
 
+	if (stackTop == 1) {
+		MachineStack.top().push_back(0);
+	}
+	else if (stackTop == 0) {
+		MachineStack.top().push_back(1);
+	}
+	else {
+		return;
+	}
 }
 /**
  * Logical OR the top two values on Jaz stack and places result on Jaz stack.
@@ -222,9 +234,15 @@ void not() {
  * and places the result into the write top list.
  */
 void or() {
-	/**
-	 * Something should go here
-	 */
+	int firstV = MachineStack.top().back();
+	int secondV = MachineStack.top().back();
+
+	if ((firstV == 0) && (secondV == 0)) {
+		MachineStack.top().push_back(0);
+	}
+	else {
+		MachineStack.top().push_back(1);
+	}
 }
 /**
  * Checks to see if the top to values and different.
