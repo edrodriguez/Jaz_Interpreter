@@ -6,7 +6,9 @@
 #include <string>
 using namespace std;
 
-void push(string value);
+void push(string value); /*_/*/
+
+void pop();
 
 void rvalue(string variable);
 
@@ -16,15 +18,22 @@ void colEquals();
 
 void copy();
 
+void plusOp();
+
+void minusOp();
+
+void multiOp();
+
+void divOp();
+
+void modOp();
+
+void show(string);
+
 void label( string );
 int goTo( string );
 int goFalse( string );
 int goTrue( string );
-void plusOp();
-void minusOp();
-void multiOp();
-void divOp();
-void modOp();
 void and();
 void not();
 void or();
@@ -35,7 +44,6 @@ void lessThan();
 void greaterThan();
 void equalTo();
 void print();
-void show( string );
 void begin();
 void end();
 int Return();

@@ -8,8 +8,8 @@ void push(string value) {
 /**
 *  Pops value from stack
 */
-void pop(string value) {
-	MachineStack.top().pop_back(stoi(value));
+void pop() {
+	MachineStack.top().pop_back();
 }
 /**
  * Pushes the value of passed variable on the Jaz Stack.
@@ -199,14 +199,14 @@ void modOp() {
  * and places the result into the write top list.
  */
 void and() {
-/*	Variable firstV = Variable.top().back();
-	Variable secondV = Variable.top().back();
+	int firstV = MachineStack.top().back();
+	int secondV = MachineStack.top().back();
 
-    if ((FstValue.getValue() == 1) && (SndValue.getValue() == 1)) {
-        Variable.top().push_back(Variable("", 1));
+    if ((firstV == 1) && (secondV == 1)) {
+        MachineStack.top().push_back( 1 );
     } else {
-        Variable.top().push_back(Variable("", 0));
-    }*/
+        MachineStack.top().push_back( 0 );
+    }
 }
 /**
  * Logical NOT the top value on Jaz stack and places result on Jaz stack.
