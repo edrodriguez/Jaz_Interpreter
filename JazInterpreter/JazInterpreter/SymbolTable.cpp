@@ -6,3 +6,8 @@ vector<vector<string>> InstructionList;
 list  <string> OutputQueue;
 stack <list<int>> MachineStack;
 stack<vector<Variable>> Variables;
+
+void initializeSymbols() {
+	Variables.push(*(new vector<Variable>));
+	MachineStack.push(*(new list<int>));
+}

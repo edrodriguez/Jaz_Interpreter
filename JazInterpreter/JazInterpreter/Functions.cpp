@@ -17,7 +17,7 @@ void pop() {
  * onto the write list on the stack.
  */
 void rvalue(string variable) {
-	int value;
+	int value = 0;
 
 	for (size_t i = 0; i < Variables.top().size(); i++) {
 		if (variable == Variables.top()[i].getName()) {
@@ -34,7 +34,6 @@ void rvalue(string variable) {
  * Takes the name passed on the write list on the stack.
  */
 void lvalue(string variable) {
-
 	//find if variable has already been declared
 	bool found = false;
 	Variable v;
@@ -45,6 +44,7 @@ void lvalue(string variable) {
 			break;
 		}
 	}
+
 	//if not found create variable
 	if (!found) {
 		v.setName(variable);

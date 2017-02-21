@@ -68,6 +68,7 @@ int main(int argc, char* argv[])
 
 			//Intepreter Operation
 			vector<string> instructions;
+			initializeSymbols();
 			ReadFile(inputFileName, instructions);
 			separateInstructions(instructions);
 			extractLabels();
