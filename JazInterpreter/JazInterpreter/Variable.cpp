@@ -1,7 +1,7 @@
 #include "Variable.h"
 
-Variable::Variable(){
-
+//Default Constructor
+Variable::Variable() {
 	string name = "";
 	int value = 0;
 
@@ -9,17 +9,18 @@ Variable::Variable(){
 	this->value =  value;
 }
 
-Variable::Variable(string name, int value){
-
+//Constructor
+Variable::Variable(string name, int value) {
 	this->name =  name;
 	this->value =  value;
-
 }
 
+//Assign the string name to the name of the variable
 void Variable::setName(string name) {
 	this->name = name;
 }
 
+//Assing the int value to the value of the variable
 void Variable::setValue(int value) {
 	this->value = value;
 }
