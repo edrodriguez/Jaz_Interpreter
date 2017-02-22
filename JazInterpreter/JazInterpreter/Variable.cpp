@@ -1,4 +1,9 @@
 #include "Variable.h"
+////////////////////////////////////////////////////////////////
+//	Description:This file contains the Variable class. This
+//	will be used as a way of relating a variable name to a value
+//	and use them during the program execution
+////////////////////////////////////////////////////////////////
 
 //Default Constructor
 Variable::Variable() {
