@@ -1,4 +1,10 @@
-#include <cstdlib>
+////////////////////////////////////////////////////////////////
+//	Description:This file contains the input/output module of
+//	the interpreter. It is in charge of reading a program to be
+//	interpreted and saving each of its instructions. It also
+//	write the results of running the program into an indicated
+//	output file
+////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -7,7 +13,8 @@
 #include "SymbolTable.h"
 using namespace std;
 
-
+//Extract each line of the file indicated by filename and
+//write each line as an entry in the vector instructions
 void ReadFile(string fileName, vector<string> &instructions){
 	ifstream inputFile;
 	string line;
@@ -19,6 +26,7 @@ void ReadFile(string fileName, vector<string> &instructions){
 		string line;
 		while (!inputFile.eof()) {
 			getline(inputFile, line);
+			//Ignore empty lines
 			if (line != "")
 				instructions.push_back(line);
 		}
@@ -29,9 +37,9 @@ void ReadFile(string fileName, vector<string> &instructions){
 	inputFile.close();
 }
 
+//Write the contents of the Output queue to the file indicated in filename
 void WriteFile(string fileName) {
 	ofstream outputFile;
-	OutputQueue;
 
 	outputFile.open(fileName);
 	if (outputFile.good())
