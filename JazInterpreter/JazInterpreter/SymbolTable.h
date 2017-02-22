@@ -15,5 +15,7 @@ extern vector<vector<string>> InstructionList;
 extern list  <string> OutputQueue;
 extern stack <list<int>> MachineStack;
 extern stack<vector<Variable>> Variables;
+extern vector<Variable> *writeVariablePointer;
+extern vector<Variable> *readVariablePointer;
 
 void initializeSymbols();

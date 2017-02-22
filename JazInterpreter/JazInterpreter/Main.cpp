@@ -77,7 +77,8 @@ int main(int argc, char* argv[])
 
 		}
 	}
-	cout << "Error running the interpreter. You need to provide mode of operation." << endl;
+	else
+		cout << "Error running the interpreter. You need to provide mode of operation." << endl;
 
 	return 0;
 }

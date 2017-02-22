@@ -26,7 +26,7 @@ void extractLabels() {
 
 void runProgram()
 {
-	for (programCounter; programCounter < InstructionList.size(); programCounter++)
+	for (programCounter; programCounter < int(InstructionList.size()); programCounter++)
 	{
 		executeInstruction(InstructionList[programCounter]);
 	}
@@ -60,19 +60,19 @@ void executeInstruction(vector<string> instruction)
 		copy();
 	}
 	else if (intsrOperator == "label") {
-		label(instruction[1]);
+		label(instruction[1], programCounter);
 	}
 	else if (intsrOperator == "goto") {
-		goTo(instruction[1]);
+		goTo(instruction[1], programCounter);
 	}
 	else if (intsrOperator == "gofalse") {
-		goFalse(instruction[1]);
+		goFalse(instruction[1], programCounter);
 	}
 	else if (intsrOperator == "gotrue") {
-		goTrue(instruction[1]);
+		goTrue(instruction[1], programCounter);
 	}
 	else if (intsrOperator == "halt") {
-		Return();
+		halt(programCounter);
 	}
 	else if (intsrOperator == "+") {
 		plusOp();
@@ -120,17 +120,7 @@ void executeInstruction(vector<string> instruction)
 		print();
 	}
 	else if (intsrOperator == "show") {
-		/**
-		* Here we grab the operand
-		*/
-		string content;
-		for (size_t i = 1; i < instruction.size(); i++) {
-			for (size_t j = 0; j < instruction[i].length(); j = 0) {
-				content[i] = instruction[i][j];
-			}
-
-		}
-		show(content);
+		show(instruction);
 	}
 	else if (intsrOperator == "begin") {
 		begin();
@@ -139,17 +129,10 @@ void executeInstruction(vector<string> instruction)
 		end();
 	}
 	else if (intsrOperator == "return") {
-		Return();
+		Return(programCounter);
 	}
 	else if (intsrOperator == "call") {
-		call(instruction[1]);
-	}
-	else if (intsrOperator == "==") {
-		/**
-		 * Do nothing..
-         *  This allows white space
-         *  lines between instructions.
-         */
+		call(instruction[1], programCounter);
 	}
 	else {
 		cout << "Syntax Error: " << intsrOperator;

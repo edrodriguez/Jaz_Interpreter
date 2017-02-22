@@ -6,7 +6,9 @@
 #include <string>
 using namespace std;
 
-void push(string value); /*_/*/
+
+//DO WE NEED A HALT FUNCTION??
+void push(string value);
 
 void pop();
 
@@ -28,7 +30,7 @@ void divOp();
 
 void modOp();
 
-void show(string);
+void show(vector<string>);
 
 void and();
 
@@ -36,10 +38,14 @@ void not();
 
 void or ();
 
-void label( string );
-int goTo( string );
-int goFalse( string );
-int goTrue( string );
+void label(string label, int programCounter);
+
+void goTo(string label, int &programCounter);
+
+void goFalse(string label, int &programCounter);
+
+void goTrue(string label, int &programCounter);
+
 void different();
 void lessThanEq();
 void greaterThanEq();
@@ -49,5 +55,6 @@ void equalTo();
 void print();
 void begin();
 void end();
-int Return();
-int call( string );
+void Return(int &programCounter);
+void call(string label, int &programCounter);
+void halt(int &programCounter);

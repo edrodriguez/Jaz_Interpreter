@@ -19,9 +19,10 @@ void pop() {
 void rvalue(string variable) {
 	int value = 0;
 
-	for (size_t i = 0; i < Variables.top().size(); i++) {
-		if (variable == Variables.top()[i].getName()) {
-			value = Variables.top()[i].getValue();
+	for (size_t i = 0; i < readVariablePointer->size()/*Variables.top().size()*/; i++) {
+		if (variable == readVariablePointer->at(i).getName()/*Variables.top()[i].getName()*/) {
+			value = readVariablePointer->at(i).getValue();
+			//value = Variables.top()[i].getValue();
 			break;
 		}
 	}
@@ -36,23 +37,23 @@ void rvalue(string variable) {
 void lvalue(string variable) {
 	//find if variable has already been declared
 	bool found = false;
-	Variable v;
-	for (size_t i = 0; i < Variables.top().size(); i++) {
-		if (variable == Variables.top()[i].getName()) {
+	for (size_t i = 0; i < writeVariablePointer->size()/*Variables.top().size()*/; i++) {
+		if (variable == writeVariablePointer->at(i).getName()/*Variables.top()[i].getName()*/) {
 			found = true;
-			v = Variables.top()[i];
+			MachineStack.top().push_back(int(&(writeVariablePointer->at(i))));
 			break;
 		}
 	}
 
 	//if not found create variable
 	if (!found) {
+		Variable v;
 		v.setName(variable);
 		v.setValue(0);
+		writeVariablePointer->push_back(v);
+		MachineStack.top().push_back(int(&(writeVariablePointer->back())));
+		//Variables.top().push_back(v);
 	}
-
-	Variables.top().push_back(v);
-	MachineStack.top().push_back(int(&(Variables.top().back())));
 }
 /**
  * Takes the number and places it into the location below it.
@@ -66,9 +67,10 @@ void colEquals() {
 	int vAdress = MachineStack.top().back();
 	MachineStack.top().pop_back();
 
-	for (size_t i = 0; i < Variables.top().size(); i++) {
-		if (vAdress == int(&(Variables.top()[i]))) {
-			Variables.top()[i].setValue(vValue);
+	for (size_t i = 0; i < writeVariablePointer->size()/*Variables.top().size()*/; i++) {
+		if (vAdress == int(&(writeVariablePointer->at(i)))/*int(&(Variables.top()[i]))*/) {
+			writeVariablePointer->at(i).setValue(vValue);
+			//Variables.top()[i].setValue(vValue);
 			break;
 		}
 	}
@@ -84,39 +86,65 @@ void copy() {
 	MachineStack.top().push_back(value);
 }
 
-void label(string part) {
-	/**
-	 * Something should go here
-	 */
+void label(string label, int programCounter) {
+	std::unordered_map<std::string, int>::const_iterator found;
+
+	found = labels.find(label);
+
+	if (found == labels.end())
+		labels.insert({ label, programCounter });
 }
+
 /**
  * Jumps to the location in the label.
  */
-int goTo(string part) {
-	/**
-	 * Something should go here
-	 */
-	return 0;
+void goTo(string label, int &programCounter) {
+	std::unordered_map<std::string, int>::const_iterator found;
+	
+	found = labels.find(label);
+
+	if (found != labels.end())
+		programCounter = found->second;
 }
+
 /**
  * Jumps if the top value in the Write top's last location
  * is zero.
  */
-int goFalse(string part) {
-	/**
-	 * Something should go here
-	 */
-	return 0;
+void goFalse(string label, int &programCounter) {
+	int vValue = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	std::unordered_map<std::string, int>::const_iterator found;
 
+	if (vValue == 0){
+		found = labels.find(label);
+	}
+
+	if (found != labels.end())
+		programCounter = found->second;
 }
+
+//
+//
+//
+void halt(int &programCounter) {
+	programCounter = InstructionList.size() - 1;
+}
+
 /**
  * Jumps if the top value in the write top's last location is one.
  */
-int goTrue(string part) {
-	/**
-	 * Something should go here
-	 */
-	return 0;
+void goTrue(string label, int &programCounter) {
+	int vValue = MachineStack.top().back();
+	MachineStack.top().pop_back();
+	std::unordered_map<std::string, int>::const_iterator found;
+
+	if (vValue != 0) {
+		found = labels.find(label);
+	}
+
+	if (found != labels.end())
+		programCounter = found->second;
 }
 /**
  * Adds top two values on Jaz stack and places result on Jaz stack.
@@ -340,60 +368,78 @@ void equalTo() {
 		MachineStack.top().push_back(0);
 	}
 }
+
 /**
  * Prints the value from the write top's last entry.
  */
 void print() {
 	int temp = MachineStack.top().back();
-	cout << temp << endl;
+	OutputQueue.push_back(to_string(temp));
+	OutputQueue.push_back("\n");
 }
 /**
  * Prints the passed string.
  */
-void show(string operand) {
-	/**
-     * Print operand
-	 */
-	cout << operand;
+void show(vector<string> instruction) {
+	string content;
+	for (size_t i = 1; i < instruction.size(); i++) {
+		content += instruction[i];
+		content += " ";
+
+	}
+	OutputQueue.push_back(content);
+	OutputQueue.push_back("\n");
 }
+
 /**
  * Starts the parameter passing block.
  * Increases the stack table to start
  * the subprogram.
  */
 void begin() {
-	//MachineStack.top.push_back(new list<int>);
+	Variables.push(*(new vector<Variable>));
+	writeVariablePointer = &Variables.top();
 }
+
 /**
  * Ends parameter passing block.
  * Decreases the Read top and sets begin to false.
  */
 void end() {
-	/**
-	 * Something should go here
-	 */
+	Variables.pop();
+	readVariablePointer = &Variables.top();
 }
+
 /**
  * Ends the function call get the top value from the jump stack.
  * If begin is set decrements the write top pointer.
  */
-int Return() {
-	/**
-	 * Exiting...
-	 */
-	return 0;
-
+void Return(int &programCounter) {
+	programCounter = JumpStack.top();
+	JumpStack.pop();
+	MachineStack.pop();
+	vector<Variable> tempV = Variables.top();
+	Variables.pop();
+	writeVariablePointer = &Variables.top();
+	Variables.push(tempV);
+	readVariablePointer = &Variables.top();
 }
+
 /**
  * Starts the function call. Sets the instruction counter
  * to the location of the passed label. Sets the old instruction
  * pointer value onto the jump stack. If begin is set increments
  * the Read top pointer.
  */
-int call(string part) {
-	/**
-	 * Something should go here
-	 **/
-	return 0;
+void call(string label, int &programCounter) {
+	readVariablePointer = &Variables.top();
+	MachineStack.push(*(new list<int>));
+	JumpStack.push(programCounter);
 
+	std::unordered_map<std::string, int>::const_iterator found;
+	
+	found = labels.find(label);
+
+	if (found != labels.end())
+		programCounter = found->second;
 }
