@@ -1,44 +1,45 @@
+////////////////////////////////////////////////////////////////
+//	Description:This file contains the implementation of the
+//	functions performed by the jaz machine
+////////////////////////////////////////////////////////////////
 #include "Functions.h"
-/**
-*  Pushes value to stack
-*/
+#include "SymbolTable.h"
+#include "Variable.h"
+using namespace std;
+
+////////////////////////////////
+///////STACK MANIPULATION///////
+////////////////////////////////
+
+//Pushes value to the machine stack
 void push(string value) {
 	MachineStack.top().push_back(stoi(value));
 }
-/**
-*  Pops value from stack
-*/
-void pop() {
-	MachineStack.top().pop_back();
-}
-/**
- * Pushes the value of passed variable on the Jaz Stack.
- * Takes the read list on the stack and pushes that value
- * onto the write list on the stack.
- */
+
+//Pushes the value of the passed variable on the machine stack.
+//Searches for the variable in the list of variables within the scope and
+//if found pushes its value into the machine stack
 void rvalue(string variable) {
 	int value = 0;
 
-	for (size_t i = 0; i < readVariablePointer->size()/*Variables.top().size()*/; i++) {
-		if (variable == readVariablePointer->at(i).getName()/*Variables.top()[i].getName()*/) {
+	for (size_t i = 0; i < readVariablePointer->size(); i++) {
+		if (variable == readVariablePointer->at(i).getName()) {
 			value = readVariablePointer->at(i).getValue();
-			//value = Variables.top()[i].getValue();
 			break;
 		}
 	}
 
-	//Need to add check for making sure variable was found!!!!!!!!!!
 	MachineStack.top().push_back(value);
 }
-/**
- * Pushes the location passed onto the Jaz stack.
- * Takes the name passed on the write list on the stack.
- */
+
+//Pushes the address of the variable indicated into the machine stack.
+//Searches for the variable in the list of variables available in the
+//scope and pushes it if found, or it creates a new variable if not
 void lvalue(string variable) {
 	//find if variable has already been declared
 	bool found = false;
-	for (size_t i = 0; i < writeVariablePointer->size()/*Variables.top().size()*/; i++) {
-		if (variable == writeVariablePointer->at(i).getName()/*Variables.top()[i].getName()*/) {
+	for (size_t i = 0; i < writeVariablePointer->size(); i++) {
+		if (variable == writeVariablePointer->at(i).getName()) {
 			found = true;
 			MachineStack.top().push_back(int(&(writeVariablePointer->at(i))));
 			break;
@@ -52,40 +53,43 @@ void lvalue(string variable) {
 		v.setValue(0);
 		writeVariablePointer->push_back(v);
 		MachineStack.top().push_back(int(&(writeVariablePointer->back())));
-		//Variables.top().push_back(v);
 	}
 }
-/**
- * Takes the number and places it into the location below it.
- * Removes the last 2 variables in the write top and puts them together.
- *
- */
+
+//Pops the top value of the stack
+void pop() {
+	MachineStack.top().pop_back();
+}
+
+//Takes the value on top of the stack and places it into the location placed below it.
+//It also pops both values from the stack
 void colEquals() {
-	//Add check if variable not found!!!!!!!!!!!
 	int vValue = MachineStack.top().back();
 	MachineStack.top().pop_back();
 	int vAdress = MachineStack.top().back();
 	MachineStack.top().pop_back();
 
-	for (size_t i = 0; i < writeVariablePointer->size()/*Variables.top().size()*/; i++) {
-		if (vAdress == int(&(writeVariablePointer->at(i)))/*int(&(Variables.top()[i]))*/) {
+	for (size_t i = 0; i < writeVariablePointer->size(); i++) {
+		if (vAdress == int(&(writeVariablePointer->at(i)))) {
 			writeVariablePointer->at(i).setValue(vValue);
-			//Variables.top()[i].setValue(vValue);
 			break;
 		}
 	}
 }
-/**
- * Pushes a copy of the top value on Jaz stack.
- *
- * Pushes a copy from the Write top's last variable
- * into the write top.
- */
+
+//Pushes a copy of the top value on machine stack.
 void copy() {
 	int value = MachineStack.top().back();
 	MachineStack.top().push_back(value);
 }
 
+////////////////////////////////
+//////////CONTROL FLOW//////////
+////////////////////////////////
+
+//Looks for a label with the name indicated
+//and if not found it creates one with the current program
+//counter as the line number
 void label(string label, int programCounter) {
 	std::unordered_map<std::string, int>::const_iterator found;
 
@@ -95,9 +99,7 @@ void label(string label, int programCounter) {
 		labels.insert({ label, programCounter });
 }
 
-/**
- * Jumps to the location in the label.
- */
+//Jumps to the location indicated by the label.
 void goTo(string label, int &programCounter) {
 	std::unordered_map<std::string, int>::const_iterator found;
 	
@@ -107,10 +109,7 @@ void goTo(string label, int &programCounter) {
 		programCounter = found->second;
 }
 
-/**
- * Jumps if the top value in the Write top's last location
- * is zero.
- */
+//Jumps if the top value in the machine stack is 0
 void goFalse(string label, int &programCounter) {
 	int vValue = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -124,16 +123,7 @@ void goFalse(string label, int &programCounter) {
 		programCounter = found->second;
 }
 
-//
-//
-//
-void halt(int &programCounter) {
-	programCounter = InstructionList.size() - 1;
-}
-
-/**
- * Jumps if the top value in the write top's last location is one.
- */
+//Jumps if the top value in the machine stack is nonzero
 void goTrue(string label, int &programCounter) {
 	int vValue = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -146,11 +136,17 @@ void goTrue(string label, int &programCounter) {
 	if (found != labels.end())
 		programCounter = found->second;
 }
-/**
- * Adds top two values on Jaz stack and places result on Jaz stack.
- * Takes the last two variables from the write top. Adds them together
- * and puts the result in the write top list.
- */
+
+//stops the program execution
+void halt(int &programCounter) {
+	programCounter = InstructionList.size() - 1;
+}
+
+//////////////////////////////////
+///////ARITHMETIC OPERATORS///////
+//////////////////////////////////
+
+//Adds top two values on the machine stack and places result beck on the stack.
 void plusOp() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -161,11 +157,8 @@ void plusOp() {
 	plusResult = firstV + secondV;
 	MachineStack.top().push_back(plusResult);
 }
-/**
- * Subtracts top two values on Jaz stack and places result on Jaz stack.
- * Takes the last two variables from the write top. Subtracts them together
- * and puts the result in the write top list.
- */
+
+//Subtracts top two values on the mahcine stack and places result back on the stack.
 void minusOp() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -176,11 +169,8 @@ void minusOp() {
 	minusResult = secondV - firstV;
 	MachineStack.top().push_back(minusResult);
 }
-/**
- * Multiplies top two values on Jaz stack and places result on Jaz stack.
- * Takes the last two variables from the write top. Multiplies them together
- * and puts the result in the write top list.
- */
+
+//Multiplies top two values on the machine stack and places result back on the stack.
 void multiOp() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -191,11 +181,8 @@ void multiOp() {
 	multResult = firstV * secondV;
 	MachineStack.top().push_back(multResult);
 }
-/**
- * Divides the top two values on Jaz stack and places result on Jaz stack.
- * Takes the last two variables from the write top. Divides them together
- * and puts the result in the write top list.
- */
+
+//Divides the top two values on the machine stack and places result back on the stack.
 void divOp() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -206,11 +193,7 @@ void divOp() {
 	divResult =  secondV / firstV;
 	MachineStack.top().push_back(divResult);
 }
-/**
- * Mods the top two values on Jaz stack and places result on Jaz stack.
- * Takes the last two variables from the write top. Mods them together
- * and puts the result in the write top list.
- */
+//Mods the top two values on the machine stack and places result back on the stack.
 void modOp() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -221,11 +204,12 @@ void modOp() {
 	modResult = secondV % firstV;
 	MachineStack.top().push_back(modResult);
 }
-/**
- * Logical AND the top two values on Jaz stack and places result on Jaz stack.
- * Takes the last two variables from the write top. Logical AND them together
- * and places the result into the write top list.
- */
+
+////////////////////////////////
+///////LOGICAL OPERATORS////////
+////////////////////////////////
+
+//Logical AND the top two values on the machine stack and places result back on the stack.
 void and() {
 	int firstV = MachineStack.top().back();
 	int secondV = MachineStack.top().back();
@@ -236,11 +220,7 @@ void and() {
         MachineStack.top().push_back( 0 );
     }
 }
-/**
- * Logical NOT the top value on Jaz stack and places result on Jaz stack.
- * Takes the last variable from the write top. Logical NOT it
- * and places the result into the write top list.
- */
+//Logical NOT the top value on the machine stack and places result back on the stack.
 void not() {
 	int stackTop = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -255,11 +235,8 @@ void not() {
 		return;
 	}
 }
-/**
- * Logical OR the top two values on Jaz stack and places result on Jaz stack.
- * Takes the last two variables from the write top. Logical OR them together
- * and places the result into the write top list.
- */
+
+//Logical OR the top two values on the machine stack and places result back on the stack.
 void or() {
 	int firstV = MachineStack.top().back();
 	int secondV = MachineStack.top().back();
@@ -271,10 +248,13 @@ void or() {
 		MachineStack.top().push_back(1);
 	}
 }
-/**
- * Checks to see if the top to values and different.
- * If so place a 1 otherwise places a 0 onto the stack.
- */
+
+//////////////////////////////////
+///////RELATIONAL OPERATORS///////
+//////////////////////////////////
+
+//Checks if the top two values of the machine stack are different.
+//Pushes 1 to the stack if the values are different, 0 otherwise
 void different() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -288,9 +268,9 @@ void different() {
 		MachineStack.top().push_back(0);
 	}
 }
-/**
- * Checks if the write top minus one is less or equal write top
- */
+
+//Checks if the top minus one of the machine stack is less or equal than the top
+//Pushes 1 to the stack if less or equal, 0 otherwise
 void lessThanEq() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -304,9 +284,9 @@ void lessThanEq() {
 		MachineStack.top().push_back(0);
 	}
 }
-/**
- * Checks if the write top minus one is greater or equals to the write top
- */
+
+//Checks if the top minus one of the machine stack is greater or equal than the top
+//Pushes 1 to the stack if greater or equal, 0 otherwise
 void greaterThanEq() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -320,9 +300,9 @@ void greaterThanEq() {
 		MachineStack.top().push_back(0);
 	}
 }
-/**
- * Checks if the write top minus one is less than the write top;
- */
+
+//Checks if the top minus one of the machine stack is less than the top
+//Pushes 1 to the stack if less, 0 otherwise
 void lessThan() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -336,9 +316,9 @@ void lessThan() {
 		MachineStack.top().push_back(0);
 	}
 }
-/**
- * Check if the write top minus one is greater than the write top.
- */
+
+//Checks if the top minus one of the machine stack is greater than the top
+//Pushes 1 to the stack if greater, 0 otherwise
 void greaterThan() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -352,9 +332,9 @@ void greaterThan() {
 		MachineStack.top().push_back(0);
 	}
 }
-/**
- * Checks if the write top minus one is equal to the write top.
- */
+
+//Checks if the top two values of the machine stack are equal.
+//Pushes 1 to the stack if the values are equal, 0 otherwise
 void equalTo() {
 	int firstV = MachineStack.top().back();
 	MachineStack.top().pop_back();
@@ -369,17 +349,19 @@ void equalTo() {
 	}
 }
 
-/**
- * Prints the value from the write top's last entry.
- */
+////////////////////////////////
+/////////////OUTPUT/////////////
+////////////////////////////////
+
+
+//Prints the value from the top of the machine stack.
 void print() {
 	int temp = MachineStack.top().back();
 	OutputQueue.push_back(to_string(temp));
 	OutputQueue.push_back("\n");
 }
-/**
- * Prints the passed string.
- */
+
+//Prints the string passed with the instruction
 void show(vector<string> instruction) {
 	string content;
 	for (size_t i = 1; i < instruction.size(); i++) {
@@ -391,29 +373,27 @@ void show(vector<string> instruction) {
 	OutputQueue.push_back("\n");
 }
 
-/**
- * Starts the parameter passing block.
- * Increases the stack table to start
- * the subprogram.
- */
+////////////////////////////////
+///////SUBPROGRAM CONTROL///////
+////////////////////////////////
+
+
+//Starts the parameter passing block.
+//Increases the stack for writing variables
 void begin() {
 	Variables.push(*(new vector<Variable>));
 	writeVariablePointer = &Variables.top();
 }
 
-/**
- * Ends parameter passing block.
- * Decreases the Read top and sets begin to false.
- */
+//Ends parameter passing block.
+//Decreases the stack for reading variables
 void end() {
 	Variables.pop();
 	readVariablePointer = &Variables.top();
 }
 
-/**
- * Ends the function call get the top value from the jump stack.
- * If begin is set decrements the write top pointer.
- */
+//Ends the function call, gets the top value from the jump stack,
+//pops the machine stack and lowers the variable writing stack
 void Return(int &programCounter) {
 	programCounter = JumpStack.top();
 	JumpStack.pop();
@@ -425,12 +405,11 @@ void Return(int &programCounter) {
 	readVariablePointer = &Variables.top();
 }
 
-/**
- * Starts the function call. Sets the instruction counter
- * to the location of the passed label. Sets the old instruction
- * pointer value onto the jump stack. If begin is set increments
- * the Read top pointer.
- */
+
+//Starts the function call. Sets the instruction counter
+//to the location of the passed label, pushes the old instruction
+//pointer value to the jump stack, pushes a new list to the
+//machine stack and increases the read variable pointer
 void call(string label, int &programCounter) {
 	readVariablePointer = &Variables.top();
 	MachineStack.push(*(new list<int>));
