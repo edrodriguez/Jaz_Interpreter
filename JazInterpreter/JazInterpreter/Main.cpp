@@ -12,17 +12,17 @@
 
 #include "FileManipulation.h"
 #include "ControlManipulation.h"
-#include "SymbolTable.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-	//Run the appropriate mode of Operation
+	//Check for input parameters
 	if (argv[1] != nullptr)
 	{
 		string mode = argv[1];
 
+		//Run the appropriate mode of Operation
 		if (mode == "-test")
 		{
 			cout << "Running Tests for Intepreter" << endl;
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 			if (argv[2] != nullptr)
 				file = argv[2];
 
-			//Parse parameters
+			//Get filenames. Input file required, output optional
 			if (file == "-infile")
 			{
 				if (argv[3] != nullptr)
@@ -68,13 +68,12 @@ int main(int argc, char* argv[])
 
 			//Intepreter Operation
 			vector<string> instructions;
-			initializeSymbols();
 			ReadFile(inputFileName, instructions);
 			separateInstructions(instructions);
 			extractLabels();
 			runProgram();
 			WriteFile(outputFileName);
-
+			cout << "Successful operation of interpreter. Check results in " << outputFileName << "." << endl;
 		}
 	}
 	else

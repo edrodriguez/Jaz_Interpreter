@@ -1,11 +1,20 @@
+////////////////////////////////////////////////////////////////
+//	Description:This file contains the module of the interpreter
+//	that runs the program and calls for the execution of each
+//	individual instruction. It is also in charge of separating
+//	the information obtained from the file into instructions
+//	usable by the interpreter
+////////////////////////////////////////////////////////////////
 #include <sstream>
 #include <iterator>
+
 #include "Functions.h"
 #include "ControlManipulation.h"
 #include "SymbolTable.h"
-
 using namespace std;
 
+//Separates the lines read from the program file into
+//operators and operands
 void separateInstructions(vector<string> instructions) {
 	InstructionList.resize(instructions.size());
 
@@ -17,6 +26,7 @@ void separateInstructions(vector<string> instructions) {
 	}
 }
 
+//Finds all the labels in the program and saves their line number
 void extractLabels() {
 	for (size_t i = 0; i < InstructionList.size(); i++) {
 		if (InstructionList[i][0] == "label")
@@ -24,23 +34,25 @@ void extractLabels() {
 	}
 }
 
+//Iterates through the list of instructions and calls for the execution
+//of each individual instruction
 void runProgram()
 {
+	initializeSymbols();
+
 	for (programCounter; programCounter < int(InstructionList.size()); programCounter++)
 	{
 		executeInstruction(InstructionList[programCounter]);
 	}
 }
 
+//Calls for the execution of the proper instruction according to the operator
 void executeInstruction(vector<string> instruction)
 {
-    /**
-	 * Here we grab the operator
-	 */
+	 //Grab the operator
 	string intsrOperator = instruction[0];
-	/**
-	 * This will execute the instruction accordingly
-	 */
+	
+	//execute the corresponding instruction
 	if (intsrOperator == "push") {
 		push(instruction[1]);
 	}
