@@ -20,16 +20,24 @@ void push(string value) {
 //Searches for the variable in the list of variables within the scope and
 //if found pushes its value into the machine stack
 void rvalue(string variable) {
-	int value = 0;
-
+	//find if variable has already been declared
+	bool found = false;
 	for (size_t i = 0; i < readVariablePointer->size(); i++) {
 		if (variable == readVariablePointer->at(i).getName()) {
-			value = readVariablePointer->at(i).getValue();
+			MachineStack.top().push_back(readVariablePointer->at(i).getValue());
+			found = true;
 			break;
 		}
 	}
 
-	MachineStack.top().push_back(value);
+	//if not found create variable
+	if (!found) {
+		Variable v;
+		v.setName(variable);
+		v.setValue(0);
+		readVariablePointer->push_back(v);
+		MachineStack.top().push_back(readVariablePointer->back().getValue());
+	}
 }
 
 //Pushes the address of the variable indicated into the machine stack.
