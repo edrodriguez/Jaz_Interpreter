@@ -117,9 +117,10 @@ void goFalse(string label, int &programCounter) {
 
 	if (vValue == 0){
 		found = labels.find(label);
-		if (found != labels.end())
-			programCounter = found->second;
 	}
+
+	if (found != labels.end())
+		programCounter = found->second;
 }
 
 //Jumps if the top value in the machine stack is nonzero
@@ -130,9 +131,10 @@ void goTrue(string label, int &programCounter) {
 
 	if (vValue != 0) {
 		found = labels.find(label);
-		if (found != labels.end())
-			programCounter = found->second;
 	}
+
+	if (found != labels.end())
+		programCounter = found->second;
 }
 
 //stops the program execution
