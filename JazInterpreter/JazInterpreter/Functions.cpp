@@ -270,12 +270,12 @@ void different() {
 //Checks if the top minus one of the machine stack is less or equal than the top
 //Pushes 1 to the stack if less or equal, 0 otherwise
 void lessThanEq() {
-	int firstV = MachineStack.top().back();
+	int top = MachineStack.top().back();
 	MachineStack.top().pop_back();
-	int secondV = MachineStack.top().back();
+	int topMinusOne = MachineStack.top().back();
 	MachineStack.top().pop_back();
 
-	if (firstV <= secondV) {
+	if (topMinusOne <= top) {
 		MachineStack.top().push_back(1);
 	}
 	else {
@@ -286,12 +286,12 @@ void lessThanEq() {
 //Checks if the top minus one of the machine stack is greater or equal than the top
 //Pushes 1 to the stack if greater or equal, 0 otherwise
 void greaterThanEq() {
-	int firstV = MachineStack.top().back();
+	int top = MachineStack.top().back();
 	MachineStack.top().pop_back();
-	int secondV = MachineStack.top().back();
+	int topMinusOne = MachineStack.top().back();
 	MachineStack.top().pop_back();
 
-	if (firstV >= secondV) {
+	if (topMinusOne >= top) {
 		MachineStack.top().push_back(1);
 	}
 	else {
@@ -302,12 +302,12 @@ void greaterThanEq() {
 //Checks if the top minus one of the machine stack is less than the top
 //Pushes 1 to the stack if less, 0 otherwise
 void lessThan() {
-	int firstV = MachineStack.top().back();
+	int top = MachineStack.top().back();
 	MachineStack.top().pop_back();
-	int secondV = MachineStack.top().back();
+	int topMinusOne = MachineStack.top().back();
 	MachineStack.top().pop_back();
 
-	if (firstV < secondV) {
+	if (topMinusOne < top) {
 		MachineStack.top().push_back(1);
 	}
 	else {
@@ -318,12 +318,12 @@ void lessThan() {
 //Checks if the top minus one of the machine stack is greater than the top
 //Pushes 1 to the stack if greater, 0 otherwise
 void greaterThan() {
-	int firstV = MachineStack.top().back();
+	int top = MachineStack.top().back();
 	MachineStack.top().pop_back();
-	int secondV = MachineStack.top().back();
+	int topMinusOne = MachineStack.top().back();
 	MachineStack.top().pop_back();
 
-	if (firstV > secondV) {
+	if (topMinusOne > top) {
 		MachineStack.top().push_back(1);
 	}
 	else {
