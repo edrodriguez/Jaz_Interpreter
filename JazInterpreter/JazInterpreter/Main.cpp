@@ -78,7 +78,6 @@ int main(int argc, char* argv[])
 			extractLabels();
 			runProgram();
 			WriteFile(file);
-			cout << "Successful operation of interpreter. Check results in " << file << "." << endl;
 		}
 	}
 	else

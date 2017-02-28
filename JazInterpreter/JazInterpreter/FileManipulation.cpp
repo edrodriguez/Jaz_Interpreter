@@ -17,32 +17,24 @@ using namespace std;
 //write each line as an entry in the vector instructions
 void ReadFile(string fileName, vector<string> &instructions){
 	ifstream inputFile;
-	string line, newFileName;
-	bool found = false;
-	len = fileName.length();
+	string line;
 
-	//The idea is to check if there is a .jaz
-	found = fileName[len - 4] == '.' && fileName[len - 3] == 'j'
-		    && fileName[len - 2] == 'a' && fileName[len - 1] == 'z';
-	if (found)
-    {
-		inputFile.open(fileName);
-	}
-	else
-	{
-		newFileName = fileName + ".jaz";
-		inputFile.open(newFileName.c_str()); 
-	}
+	//check if file has.jaz at the end
+	size_t found = fileName.find(".jaz");
 
-	if (inputFile.good())
-	{
+	if (found==string::npos)
+		fileName.append(".jaz");
+
+	inputFile.open(fileName);
+
+	if (inputFile.good()){
 		string line;
 		while (!inputFile.eof()) {
 			getline(inputFile, line);
 			//Ignore empty lines
 			if (line != "")
 				instructions.push_back(line);
-		}
+		} 
 	}
 	else
 		cout << "Could not read input file." << endl;
@@ -53,16 +45,22 @@ void ReadFile(string fileName, vector<string> &instructions){
 //Write the contents of the Output queue to the file indicated in filename
 void WriteFile(string fileName) {
 	ofstream outputFile;
-	string newFileName;
 
-	newFileName = fileName + ".out";
-	outputFile.open(newFileName.c_str());
-	if (outputFile.good())
-	{
+	//check if file has.jaz at the end
+	size_t found = fileName.find(".jaz");
+	//remove it if necessary
+	if (found != string::npos)
+		for (int i = 0; i < 4; i++)
+			fileName.pop_back();
+
+	fileName.append(".out");
+	outputFile.open(fileName);
+	if (outputFile.good()) {
 		while(!OutputQueue.empty()) {
 			outputFile << OutputQueue.front();
 			OutputQueue.pop_front();
 		}
+		cout << "Successful operation of interpreter. Check results in " << fileName << endl;
 	}
 	else
 		cout << "Could not write to output file." << endl;

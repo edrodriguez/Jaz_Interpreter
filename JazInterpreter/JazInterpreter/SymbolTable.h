@@ -19,16 +19,16 @@ using namespace std;
 extern unordered_map<string, int> labels;
 
 //Stack of jumps performed during the program execution
-extern stack <int> JumpStack;
+extern stack<int> JumpStack;
 
 //Holds the instructions of the program to be run in order
 extern vector<vector<string>> InstructionList;
 
 //Holds the information to be written into the output files
-extern list  <string> OutputQueue;
+extern list<string> OutputQueue;
 
 //This is the stack that the Jaz machine uses for performing its operations
-extern stack <list<int>> MachineStack;
+extern stack<list<int>> MachineStack;
 
 //List of variables contained in the program
 extern stack<vector<Variable>> Variables;
