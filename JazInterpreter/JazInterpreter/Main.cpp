@@ -31,49 +31,54 @@ int main(int argc, char* argv[])
 		}
 		else if (mode == "-interpret")
 		{
-			string inputFileName, outputFileName;
+			//string inputFileName, outputFileName;
 			string file;
 
 			if (argv[2] != nullptr)
 				file = argv[2];
-
-			//Get filenames. Input file required, output optional
-			if (file == "-infile")
-			{
-				if (argv[3] != nullptr)
-					inputFileName = argv[3];
-
-				if (argv[4] != nullptr && argv[4] == "-outfile")
-					outputFileName = argv[5];
-				else
-					outputFileName = "Results.txt";
-			}
-			else if (argv[2] == "-outfile")
-			{
-				if (argv[3] != nullptr)
-					outputFileName = argv[3];
-
-				if (argv[4] != nullptr && argv[4] == "-infile")
-					outputFileName = argv[5];
-				else
-				{
-					cout << "Error running the interpreter. You need to provide a source file." << endl;
-				}
-			}
 			else
 			{
 				cout << "Error running the interpreter. You need to provide a source file." << endl;
 				return 0;
 			}
 
+			////Get filenames. Input file required, output optional
+			//if (file == "-infile")
+			//{
+			//	if (argv[3] != nullptr)
+			//		inputFileName = argv[3];
+
+			//	if (argv[4] != nullptr && argv[4] == "-outfile")
+			//		outputFileName = argv[5];
+			//	else
+			//		outputFileName = "Results.txt";
+			//}
+			//else if (argv[2] == "-outfile")
+			//{
+			//	if (argv[3] != nullptr)
+			//		outputFileName = argv[3];
+
+			//	if (argv[4] != nullptr && argv[4] == "-infile")
+			//		outputFileName = argv[5];
+			//	else
+			//	{
+			//		cout << "Error running the interpreter. You need to provide a source file." << endl;
+			//	}
+			//}
+			//else
+			//{
+			//	cout << "Error running the interpreter. You need to provide a source file." << endl;
+			//	return 0;
+			//}
+
 			//Intepreter Operation
 			vector<string> instructions;
-			ReadFile(inputFileName, instructions);
+			ReadFile(file, instructions);
 			separateInstructions(instructions);
 			extractLabels();
 			runProgram();
-			WriteFile(outputFileName);
-			cout << "Successful operation of interpreter. Check results in " << outputFileName << "." << endl;
+			WriteFile(file);
+			cout << "Successful operation of interpreter. Check results in " << file << "." << endl;
 		}
 	}
 	else
