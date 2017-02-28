@@ -23,11 +23,13 @@ int main(int argc, char* argv[])
 		string file = argv[1];	
 		vector<string> instructions;
 
-		ReadFile(file, instructions);
-		separateInstructions(instructions);
-		extractLabels();
-		runProgram();
-		WriteFile(file);
+		bool read = ReadFile(file, instructions);
+		if (read) {
+			separateInstructions(instructions);
+			extractLabels();
+			runProgram();
+			WriteFile(file);
+		}
 	}
 	else
 		cout << "Error running the interpreter. You need to provide a source file." << endl;

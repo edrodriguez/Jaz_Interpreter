@@ -15,9 +15,10 @@ using namespace std;
 
 //Extract each line of the file indicated by filename and
 //write each line as an entry in the vector instructions
-void ReadFile(string fileName, vector<string> &instructions){
+bool ReadFile(string fileName, vector<string> &instructions){
 	ifstream inputFile;
 	string line;
+	bool read = false;
 
 	//check if file has.jaz at the end
 	size_t found = fileName.find(".jaz");
@@ -34,12 +35,15 @@ void ReadFile(string fileName, vector<string> &instructions){
 			//Ignore empty lines
 			if (line != "")
 				instructions.push_back(line);
-		} 
+		}
+		read = true;
 	}
 	else
 		cout << "Could not read input file." << endl;
 
 	inputFile.close();
+
+	return read;
 }
 
 //Write the contents of the Output queue to the file indicated in filename

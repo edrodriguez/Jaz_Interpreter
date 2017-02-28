@@ -12,7 +12,7 @@ using namespace std;
 
 //Extract each line of the file indicated by filename and
 //write each line as an entry in the vector instructions
-void ReadFile(string fileName, vector<string> &instructions);
+bool ReadFile(string fileName, vector<string> &instructions);
 
 //Write the contents of the Output queue to the file indicated in filename
 void WriteFile(string fileName);
