@@ -8,7 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-
+#include <regex>
 #include "FileManipulation.h"
 #include "SymbolTable.h"
 using namespace std;
@@ -17,9 +17,22 @@ using namespace std;
 //write each line as an entry in the vector instructions
 void ReadFile(string fileName, vector<string> &instructions){
 	ifstream inputFile;
-	string line;
+	string line, newFileName;
+	bool found = false;
+	len = fileName.length();
 
-	inputFile.open(fileName);
+	//The idea is to check if there is a .jaz
+	found = fileName[len - 4] == '.' && fileName[len - 3] == 'j'
+		    && fileName[len - 2] == 'a' && fileName[len - 1] == 'z';
+	if (found)
+    {
+		inputFile.open(fileName);
+	}
+	else
+	{
+		newFileName = fileName + ".jaz";
+		inputFile.open(newFileName.c_str()); 
+	}
 
 	if (inputFile.good())
 	{
@@ -40,8 +53,10 @@ void ReadFile(string fileName, vector<string> &instructions){
 //Write the contents of the Output queue to the file indicated in filename
 void WriteFile(string fileName) {
 	ofstream outputFile;
+	string newFileName;
 
-	outputFile.open(fileName);
+	newFileName = fileName + ".out";
+	outputFile.open(newFileName.c_str());
 	if (outputFile.good())
 	{
 		while(!OutputQueue.empty()) {
